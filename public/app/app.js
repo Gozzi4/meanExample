@@ -12,7 +12,7 @@ $routeProvider.when('/',{ templateUrl:'/partials/main', controller: 'mainCtrl'})
 
 
 angular.module('app').controller('mainCtrl', function ($scope){
-$scope.myVar = "Hello angualar "
+$scope.myVar = "Hello angualar"
 
 
 });
