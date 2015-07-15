@@ -1,45 +1,16 @@
-var express = require('express'),
-  stylus = require('stylus'),
-  logger = require('morgan'),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose');
+var express = require('express');
+
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var app = express();
+var config = require('./server/config')[env];
+require('./server/config/express')(app,config);
 
-function compile(str, path) {
-  return stylus(str).set('filename', path);
-}
+require('./server/config/mongoose')(config);
 
-app.set('views', __dirname + '/server/views');
-app.set('view engine', 'jade');
-app.use(logger('dev'));
-app.use(bodyParser());
-app.use(stylus.middleware(
-  {
-    src: __dirname + '/public',
-    compile: compile
-  }
-));
-app.use(express.static(__dirname + '/public'));
-
-mongoose.connect('mongodb://localhost/meanExample');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error...'));
-db.once('open', function callback() {
-  console.log('multivision db opened');
-});
-
-
-app.get('/partials/:partialPath', function(req, res) {
-    res.render('partials/' + req.params.partialPath);
-});
-
-app.get('*', function(req, res) {
-  res.render('index');
-});
+require('./server/config/routes')(app);
 
 var port = 3030;
-app.listen(port);
-console.log('Listening on port ' + port + '...');
+app.listen(config.port);
+console.log('Listening on port ' + config.port + '...');

@@ -7,12 +7,7 @@ $locationProvider.html5Mode({
   enabled: true,
   requireBase: false
 });
-$routeProvider.when('/',{ templateUrl:'/partials/main', controller: 'mainCtrl'})
+$routeProvider.when('/',{ templateUrl:'/partials/main/main', controller: 'mvmainCtrl'})
 });
 
 
-angular.module('app').controller('mainCtrl', function ($scope){
-$scope.myVar = "Hello angualar"
-
-
-});
