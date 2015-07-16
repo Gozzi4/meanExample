@@ -5,10 +5,7 @@ module.exports={
     development: {
         db: 'mongodb://localhost/meanExample',
         rootPath:rootPath,
-        port:_process.env.PORT || 3030
+        port: process.env.PORT || 9000
 
     }
-
-
-
 }
